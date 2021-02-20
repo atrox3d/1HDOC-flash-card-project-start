@@ -5,17 +5,39 @@ BACKGROUND_COLOR = "#B1DDC6"
 FONT_ITALIC = font = ("Ariel", 40, "italic")
 FONT_BOLD = font = ("Ariel", 40, "bold")
 
+FLASH_TIME = 3 * 1000
+
 
 ########################################################################################################################
 #
 #   functions
 #
 ########################################################################################################################
+def show_front(title, word):
+    canvas.itemconfig(card_title, text=title)
+    canvas.itemconfig(card_text, text=word)
+    canvas.tag_raise(card_front)
+    canvas.tag_raise(card_title)
+    canvas.tag_raise(card_text)
+
+
+def show_back(title, word):
+    canvas.itemconfig(card_title, text=title)
+    canvas.itemconfig(card_text, text=word)
+    canvas.tag_raise(card_back)
+    canvas.tag_raise(card_title)
+    canvas.tag_raise(card_text)
+
+
+def flash(title, word):
+    window.after(FLASH_TIME, show_back, title, word)
+
+
 def next_card():
     card = flashcard.next_card()
     print(card)
-    canvas.itemconfig(card_title, text=flashcard.FR)
-    canvas.itemconfig(card_text, text=card[flashcard.FR])
+    show_front(flashcard.FR, card[flashcard.FR])
+    flash(flashcard.EN, card[flashcard.EN])
 
 
 def known():
@@ -42,9 +64,10 @@ window.config(padx=50, pady=50, bg=BACKGROUND_COLOR)
 canvas = tkinter.Canvas(width=800, height=526)
 canvas.config(bg=BACKGROUND_COLOR, highlightthickness=0)
 #   cards
-card_front = tkinter.PhotoImage(file="images/card_front.png")
-card_back = tkinter.PhotoImage(file="images/card_back.png")
-canvas.create_image(400, 263, image=card_front)
+card_front_image = tkinter.PhotoImage(file="images/card_front.png")
+card_back_image = tkinter.PhotoImage(file="images/card_back.png")
+card_back = canvas.create_image(400, 263, image=card_back_image)
+card_front = canvas.create_image(400, 263, image=card_front_image)
 #   texts
 card_title = canvas.create_text(400, 150, fill="black", font=FONT_ITALIC)
 card_text = canvas.create_text(400, 263, fill="black", font=FONT_BOLD)
