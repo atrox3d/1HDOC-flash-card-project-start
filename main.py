@@ -33,6 +33,7 @@ window.config(padx=50, pady=50, bg=BACKGROUND_COLOR)
 ########################################################################################################################
 canvas = tkinter.Canvas(width=800, height=526, bg=BACKGROUND_COLOR, highlightthickness=0)
 card_front = tkinter.PhotoImage(file="images/card_front.png")
+card_back = tkinter.PhotoImage(file="images/card_back.png")
 canvas.create_image(400, 250, image=card_front)
 language_text = canvas.create_text(400, 150, text="Language", fill="black", font=("Ariel", 40, "italic"))
 term_text = canvas.create_text(400, 263, text="Term", fill="black", font=("Ariel", 40, "bold"))
