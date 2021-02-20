@@ -14,7 +14,7 @@ FONT_BOLD = font=("Ariel", 40, "bold")
 def known():
     card = flashcard.next_card()
     print(card)
-    canvas.itemconfig(term_text, text=card[flashcard.FR])
+    canvas.itemconfig(card_text, text=card[flashcard.FR])
 
 
 def unknown():
@@ -44,8 +44,8 @@ canvas.create_image(400, 263, image=card_front)
 #   texts
 card = flashcard.next_card()
 print(card)
-language_text = canvas.create_text(400, 150, text=flashcard.FR, fill="black", font=FONT_ITALIC)
-term_text = canvas.create_text(400, 263, text=card[flashcard.FR], fill="black", font=FONT_BOLD)
+card_title = canvas.create_text(400, 150, text=flashcard.FR, fill="black", font=FONT_ITALIC)
+card_text = canvas.create_text(400, 263, text=card[flashcard.FR], fill="black", font=FONT_BOLD)
 #
 canvas.grid(row=0, column=0, columnspan=2)
 ########################################################################################################################
