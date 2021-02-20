@@ -6,38 +6,36 @@ FONT_ITALIC = font = ("Ariel", 40, "italic")
 FONT_BOLD = font = ("Ariel", 40, "bold")
 
 FLASH_TIME = 3 * 1000
-
-
+current_timer = None
 ########################################################################################################################
 #
 #   functions
 #
 ########################################################################################################################
 def show_front(title, word):
-    canvas.itemconfig(card_title, text=title)
-    canvas.itemconfig(card_text, text=word)
-    canvas.tag_raise(card_front)
-    canvas.tag_raise(card_title)
-    canvas.tag_raise(card_text)
+    canvas.itemconfig(card_title, text=title, fill="black")
+    canvas.itemconfig(card_text, text=word, fill="black")
+    canvas.itemconfig(card_background, image=card_front_image)
 
 
 def show_back(title, word):
-    canvas.itemconfig(card_title, text=title)
-    canvas.itemconfig(card_text, text=word)
-    canvas.tag_raise(card_back)
-    canvas.tag_raise(card_title)
-    canvas.tag_raise(card_text)
+    canvas.itemconfig(card_title, text=title, fill="white")
+    canvas.itemconfig(card_text, text=word, fill="white")
+    canvas.itemconfig(card_background, image=card_back_image)
 
 
-def flash(title, word):
-    window.after(FLASH_TIME, show_back, title, word)
+def flip(title, word):
+    global current_timer
+    if current_timer is not None:
+        window.after_cancel(current_timer)
+    current_timer = window.after(FLASH_TIME, show_back, title, word)
 
 
 def next_card():
     card = flashcard.next_card()
     print(card)
     show_front(flashcard.FR, card[flashcard.FR])
-    flash(flashcard.EN, card[flashcard.EN])
+    flip(flashcard.EN, card[flashcard.EN])
 
 
 def known():
@@ -66,8 +64,7 @@ canvas.config(bg=BACKGROUND_COLOR, highlightthickness=0)
 #   cards
 card_front_image = tkinter.PhotoImage(file="images/card_front.png")
 card_back_image = tkinter.PhotoImage(file="images/card_back.png")
-card_back = canvas.create_image(400, 263, image=card_back_image)
-card_front = canvas.create_image(400, 263, image=card_front_image)
+card_background = canvas.create_image(400, 263, image=card_front_image)
 #   texts
 card_title = canvas.create_text(400, 150, fill="black", font=FONT_ITALIC)
 card_text = canvas.create_text(400, 263, fill="black", font=FONT_BOLD)
