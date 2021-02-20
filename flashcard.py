@@ -1,9 +1,12 @@
 import pandas
 import random
 
+FR = "French"
+EN = "English"
+
 dataframe = pandas.read_csv("data/french_words.csv")
-dictionary = dataframe.to_dict(orient="records")
+cards = dataframe.to_dict(orient="records")
 
 
-def get_random_term():
-    return random.choice(dictionary)
+def next_card():
+    return random.choice(cards)
