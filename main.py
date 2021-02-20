@@ -1,4 +1,5 @@
 import tkinter
+import flashcard
 
 BACKGROUND_COLOR = "#B1DDC6"
 FONT_ITALIC = font=("Ariel", 40, "italic")
@@ -11,13 +12,14 @@ FONT_BOLD = font=("Ariel", 40, "bold")
 #
 ########################################################################################################################
 def known():
-    print("known")
-    pass
+    term_dict = flashcard.get_random_term()
+    print(term_dict)
+    canvas.itemconfig(term_text, text=term_dict["French"])
 
 
 def unknown():
-    print("unknown")
-    pass
+    term_dict = flashcard.get_random_term()
+    print(term_dict)
 
 
 ########################################################################################################################
@@ -40,8 +42,10 @@ card_front = tkinter.PhotoImage(file="images/card_front.png")
 card_back = tkinter.PhotoImage(file="images/card_back.png")
 canvas.create_image(400, 263, image=card_front)
 #   texts
-language_text = canvas.create_text(400, 150, text="Language", fill="black", font=FONT_ITALIC)
-term_text = canvas.create_text(400, 263, text="Term", fill="black", font=FONT_BOLD)
+term_dict = flashcard.get_random_term()
+print(term_dict)
+language_text = canvas.create_text(400, 150, text="French", fill="black", font=FONT_ITALIC)
+term_text = canvas.create_text(400, 263, text=term_dict["French"], fill="black", font=FONT_BOLD)
 #
 canvas.grid(row=0, column=0, columnspan=2)
 ########################################################################################################################
